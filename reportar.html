@@ -1,0 +1,154 @@
+
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Formulario de registro de animales rescatados">
+    <title>Reportar Rescate - Rescate Animal</title>
+
+    <style>
+        
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>Sistema de Control de Rescate y Adopción Animal</h1>
+        <p>Registro de un nuevo animal rescatado.</p>
+    </header>
+
+    <nav aria-label="Navegación principal">
+        <a href="index.html">Inicio</a>
+        <a href="reportar.html">Reportar rescate</a>
+        <a href="rescates.html">Ver rescates</a>
+    </nav>
+
+    <main>
+
+        <h2>Formulario de ingreso de animal rescatado</h2>
+
+        <form id="formularioRescate">
+
+            <fieldset>
+                <legend>Datos del animal</legend>
+
+                <p>
+                    <label for="nombre">Nombre provisional:</label>
+                    <input type="text" id="nombre" name="nombre" required>
+                </p>
+
+                <p>
+                    <label for="categoria">Categoría:</label>
+                    <select id="categoria" name="categoria" required>
+                        <option value="">Seleccione una categoría</option>
+                        <option value="perro">Perros</option>
+                        <option value="gato">Gatos</option>
+                        <option value="fauna">Fauna silvestre</option>
+                    </select>
+                </p>
+
+                <p>
+                    <label for="fecha">Fecha del rescate:</label>
+                    <input type="date" id="fecha" name="fecha" required>
+                </p>
+
+                <p>
+                    <label for="ubicacion">Lugar donde fue encontrado:</label>
+                    <input type="text" id="ubicacion" name="ubicacion"
+                           placeholder="Ejemplo: Quito, sector centro" required>
+                </p>
+            </fieldset>
+
+            <fieldset>
+                <legend>Evaluación médica inicial</legend>
+
+                <p>Seleccione el nivel de urgencia médica:</p>
+
+                <input type="radio" id="alta" name="urgencia"
+                       value="Alta" required>
+                <label for="alta">Alta</label>
+
+                <br>
+
+                <input type="radio" id="media" name="urgencia"
+                       value="Media">
+                <label for="media">Media</label>
+
+                <br>
+
+                <input type="radio" id="baja" name="urgencia"
+                       value="Baja">
+                <label for="baja">Baja</label>
+
+                <p>
+                    <label for="descripcion">
+                        Descripción del estado del animal:
+                    </label>
+                </p>
+
+                <textarea id="descripcion" name="descripcion"
+                          rows="6"
+                          placeholder="Describa cómo fue encontrado el animal..."
+                          required></textarea>
+
+            </fieldset>
+
+            <p>
+                <button type="submit">Registrar información</button>
+                <button type="reset">Limpiar formulario</button>
+            </p>
+
+        </form>
+
+    </main>
+
+    <footer>
+        <p>Contacto: contacto@refugiorescate.example</p>
+        <p>© 2026 Sistema de Control de Rescate y Adopción Animal.</p>
+        <p>Todos los animales merecen una segunda oportunidad.</p>
+    </footer>
+
+    <script>
+        const formulario = document.getElementById("formularioRescate");
+
+        formulario.addEventListener("submit", function(event) {
+
+            event.preventDefault();
+
+            const nuevoAnimal = {
+                id: Date.now(),
+                nombre: document.getElementById("nombre").value.trim(),
+                categoria: document.getElementById("categoria").value,
+                fecha: document.getElementById("fecha").value,
+                ubicacion: document.getElementById("ubicacion").value.trim(),
+                urgencia: document.querySelector(
+                    'input[name="urgencia"]:checked'
+                ).value,
+                descripcion: document.getElementById("descripcion").value.trim(),
+                estado: "En evaluación"
+            };
+
+            let animales = JSON.parse(
+                localStorage.getItem("animalesRescatados") || "[]"
+            );
+
+            animales.push(nuevoAnimal);
+
+            localStorage.setItem(
+                "animalesRescatados",
+                JSON.stringify(animales)
+            );
+
+            alert("¡Animal registrado correctamente!");
+
+            window.location.href = "rescates.html";
+
+        });
+    </script>
+
+</body>
+</html>
+
